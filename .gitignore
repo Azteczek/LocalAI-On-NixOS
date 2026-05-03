@@ -1,0 +1,12 @@
+models/*
+!models/.keep
+
+result
+result-*
+
+data/
+static/
+backends/
+configuration/
+
+.direnv/

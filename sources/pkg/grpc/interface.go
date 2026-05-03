@@ -1,0 +1,60 @@
+package grpc
+
+import (
+	pb "github.com/mudler/LocalAI/pkg/grpc/proto"
+)
+
+type AIModel interface {
+	Busy() bool
+	Lock()
+	Unlock()
+	Locking() bool
+	Predict(*pb.PredictOptions) (string, error)
+	PredictStream(*pb.PredictOptions, chan string) error
+	Load(*pb.ModelOptions) error
+	Free() error
+	Embeddings(*pb.PredictOptions) ([]float32, error)
+	GenerateImage(*pb.GenerateImageRequest) error
+	GenerateVideo(*pb.GenerateVideoRequest) error
+	Detect(*pb.DetectOptions) (pb.DetectResponse, error)
+	FaceVerify(*pb.FaceVerifyRequest) (pb.FaceVerifyResponse, error)
+	FaceAnalyze(*pb.FaceAnalyzeRequest) (pb.FaceAnalyzeResponse, error)
+	VoiceVerify(*pb.VoiceVerifyRequest) (pb.VoiceVerifyResponse, error)
+	VoiceAnalyze(*pb.VoiceAnalyzeRequest) (pb.VoiceAnalyzeResponse, error)
+	VoiceEmbed(*pb.VoiceEmbedRequest) (pb.VoiceEmbedResponse, error)
+	AudioTranscription(*pb.TranscriptRequest) (pb.TranscriptResult, error)
+	AudioTranscriptionStream(*pb.TranscriptRequest, chan *pb.TranscriptStreamResponse) error
+	TTS(*pb.TTSRequest) error
+	TTSStream(*pb.TTSRequest, chan []byte) error
+	SoundGeneration(*pb.SoundGenerationRequest) error
+	TokenizeString(*pb.PredictOptions) (pb.TokenizationResponse, error)
+	Status() (pb.StatusResponse, error)
+
+	StoresSet(*pb.StoresSetOptions) error
+	StoresDelete(*pb.StoresDeleteOptions) error
+	StoresGet(*pb.StoresGetOptions) (pb.StoresGetResult, error)
+	StoresFind(*pb.StoresFindOptions) (pb.StoresFindResult, error)
+
+	VAD(*pb.VADRequest) (pb.VADResponse, error)
+
+	AudioEncode(*pb.AudioEncodeRequest) (*pb.AudioEncodeResult, error)
+	AudioDecode(*pb.AudioDecodeRequest) (*pb.AudioDecodeResult, error)
+
+	ModelMetadata(*pb.ModelOptions) (*pb.ModelMetadataResponse, error)
+
+	// Fine-tuning
+	StartFineTune(*pb.FineTuneRequest) (*pb.FineTuneJobResult, error)
+	FineTuneProgress(*pb.FineTuneProgressRequest, chan *pb.FineTuneProgressUpdate) error
+	StopFineTune(*pb.FineTuneStopRequest) error
+	ListCheckpoints(*pb.ListCheckpointsRequest) (*pb.ListCheckpointsResponse, error)
+	ExportModel(*pb.ExportModelRequest) error
+
+	// Quantization
+	StartQuantization(*pb.QuantizationRequest) (*pb.QuantizationJobResult, error)
+	QuantizationProgress(*pb.QuantizationProgressRequest, chan *pb.QuantizationProgressUpdate) error
+	StopQuantization(*pb.QuantizationStopRequest) error
+}
+
+func newReply(s string) *pb.Reply {
+	return &pb.Reply{Message: []byte(s)}
+}
