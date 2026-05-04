@@ -64,7 +64,7 @@ Once the build is complete, a `result` symlink will appear in your project root 
 ## ⚙️ Configuration & Usage
 
 ### 🚀 The Quickest Way (No cloning required)
-Because this project uses Nix Flakes, anyone can run your built package directly from GitHub without even cloning the repository!
+Because this project uses Nix Flakes, anyone can run the package directly from GitHub without even cloning the repository!
 ```bash
 nix run github:Azteczek/LocalAI-On-NixOS
 ```
